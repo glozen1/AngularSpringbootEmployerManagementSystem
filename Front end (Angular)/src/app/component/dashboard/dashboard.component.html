@@ -1,0 +1,197 @@
+<div class="container-fluid">
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Employer Management System</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addEmployer" type="submit">Add Employer</button>
+      </div>
+    </div>
+  </nav>
+
+
+
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th scope="col">No.</th>
+      <!--
+                  <th scope="col">Name</th>
+                  <th scope="col">Email</th>
+      -->
+      <th scope="col">Start Date</th>
+      <th scope="col">End Date</th>
+      <th scope="col">Company</th>
+      <th scope="col">URL</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Description</th>
+      <th scope="col">Salary</th>
+      <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let employer of empList">
+      <td>{{employer.id}}</td>
+      <!--
+                  <td>{{employer.name}}</td>
+                  <td>{{employer.email}}</td>
+      -->
+      <td>{{employer.startDate}}</td>
+      <td>{{employer.endDate}}</td>
+      <td>{{employer.company}}</td>
+      <td>{{employer.url}}</td>
+      <td>{{employer.phone}}</td>
+      <td>{{employer.description}}</td>
+      <td>{{employer.salary}}</td>
+      <td>
+        <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#editEmployer" (click)="editEmployer(employer)">Edit</button>
+        <button type="button" class="btn btn-outline-danger" (click)="deleteEmployer(employer)">Delete</button>
+      </td>
+
+    </tr>
+
+    </tbody>
+  </table>
+
+
+  <!-- Add employer modal -->
+  <div class="modal fade" id="addEmployer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addModalLabel">Add new Employer</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <form [formGroup]="empDetail">
+            <!--
+                            <div class="mb-3">
+                                <label for="addName" class="form-label">Name </label>
+                                <input type="text" formControlName="name" class="form-control" id="addName" aria-describedby="emailHelp">
+                              </div>
+                            <div class="mb-3">
+                              <label for="addEmail" class="form-label">Email </label>
+                              <input type="email" formControlName="email" class="form-control" id="addEmail" aria-describedby="emailHelp">
+                            </div>
+            -->
+            <div class="mb-3">
+              <label for="addStartDate" class="form-label">Start Date </label>
+              <input formControlName="startDate" class="form-control" id="addStartDate" aria-describedby="emailHelp" matInput [matDatepicker]="addStartDatePicker">
+              <mat-hint>YYYY/MM/DD</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="addStartDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #addStartDatePicker></mat-datepicker>
+            </div>
+            <div class="mb-3">
+              <label for="addEndDate" class="form-label">End Date </label>
+              <input type="email" formControlName="endDate" class="form-control" id="addEndDate" aria-describedby="emailHelp" matInput [matDatepicker]="addEndDatePicker">
+              <mat-hint>YYYY/MM/DD</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="addEndDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #addEndDatePicker></mat-datepicker>
+            </div>
+            <div class="mb-3">
+              <label for="addCompany" class="form-label">Company </label>
+              <input type="text" formControlName="company" class="form-control" id="addCompany" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+              <label for="addUrl" class="form-label">URL </label>
+              <input type="text" formControlName="url" class="form-control" id="addUrl" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+              <label for="addPhone" class="form-label">Phone </label>
+              <input type="text" formControlName="phone" class="form-control" id="addPhone" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+              <label for="addDescription" class="form-label">Description </label>
+              <input type="text" formControlName="description" class="form-control" id="addDescription" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+              <label for="addSalary" class="form-label">Salary </label>
+              <input type="text" formControlName="salary" class="form-control" id="addSalary" aria-describedby="emailHelp">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="addEmployer()">Add employer</button>
+            </div>
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Edit employer modal -->
+  <div class="modal fade" id="editEmployer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateModalLabel">Edit employer details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <form [formGroup]="empDetail">
+            <!--
+                            <div class="mb-3">
+                                <label for="updateName" class="form-label">Name </label>
+                                <input type="text" formControlName="name" class="form-control" id="updateName" aria-describedby="emailHelp">
+                              </div>
+                            <div class="mb-3">
+                              <label for="updateEmail" class="form-label">Email </label>
+                              <input type="email" formControlName="email" class="form-control" id="updateEmail" aria-describedby="emailHelp">
+                            </div>
+            -->
+            <div class="mb-3">
+              <label for="updateStartDate" class="form-label">Start Date </label>
+              <input type="text" formControlName="startDate" class="form-control" id="updateStartDate" aria-describedby="emailHelp"  matInput [matDatepicker]="updateStartDatePicker">
+              <mat-hint>YYYY/MM/DD</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="updateStartDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #updateStartDatePicker></mat-datepicker>
+            </div>
+            <div class="mb-3">
+              <label for="updateEndDate" class="form-label">End Date </label>
+              <input type="email" formControlName="endDate" class="form-control" id="updateEndDate" aria-describedby="emailHelp"  matInput [matDatepicker]="updateEndDatePicker">
+              <mat-hint>YYYY/MM/DD</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="updateEndDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #updateEndDatePicker></mat-datepicker>
+            </div>
+            <div class="mb-3">
+              <label for="updateCompany" class="form-label">Company </label>
+              <input type="text" formControlName="company" class="form-control" id="updateCompany" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+              <label for="updateUrl" class="form-label">URL </label>
+              <input type="text" formControlName="url" class="form-control" id="updateUrl" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+              <label for="updatePhone" class="form-label">Phone </label>
+              <input type="text" formControlName="phone" class="form-control" id="updatePhone" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+              <label for="updateDescription" class="form-label">Description </label>
+              <input type="text" formControlName="description" class="form-control" id="updateDescription" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+              <label for="updateSalary" class="form-label">Salary </label>
+              <input type="text" formControlName="salary" class="form-control" id="updateSalary" aria-describedby="emailHelp">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-outline-success" (click)="updateEmployer()" data-bs-dismiss="modal">Update </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
